@@ -48,7 +48,7 @@ var (
 		SerialNumber: big.NewInt(1),
 		Subject:      authPkixName,
 		// NotBefore is set to be 10min earlier to fix gap on time difference in cluster
-		NotBefore: time.Now().Add(-600).UTC(),
+		NotBefore: time.Unix(0, 0),
 		NotAfter:  time.Time{},
 		// Used for certificate signing only
 		KeyUsage: x509.KeyUsageCertSign | x509.KeyUsageCRLSign,
@@ -83,7 +83,7 @@ func CreateCertificateAuthority(key *Key, organizationalUnit string, years int, 
 		return nil, err
 	}
 	authTemplate.SubjectKeyId = subjectKeyID
-	authTemplate.NotAfter = time.Now().AddDate(years, 0, 0).UTC()
+	authTemplate.NotAfter = time.Unix(0, 0).AddDate(years, 0, 0).UTC()
 	if len(country) > 0 {
 		authTemplate.Subject.Country = []string{country}
 	}
